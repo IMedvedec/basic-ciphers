@@ -1,12 +1,14 @@
 const DEFAULT_ALPHABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const DEFAULT_KEY: &str = "ABC";
 
+/// Defines the configuration used for encryption/decryption.
 pub struct Config {
     alphabet: Vec<u8>,
     key: Vec<usize>,
 }
 
 impl Config {
+    /// Default configuration constructor with predefined alphabet and key value.
     pub fn new() -> Config {
         let key_shifts: Vec<usize> = DEFAULT_KEY
             .to_uppercase()
@@ -22,6 +24,7 @@ impl Config {
         }
     }
 
+    /// Function is used to get the symbol position number in the alphabet.
     fn get_symbol_position(&self, symbol: u8) -> usize {
         let mut symbol_alphabet_position = 0_usize;
 
@@ -35,6 +38,7 @@ impl Config {
     }
 }
 
+/// Function is used for plain text encryption with the given configuration.
 pub fn encrypt(plain_text: &[u8], cfg: &Config) -> Vec<u8> {
     let mut cipher_text = vec![0_u8; plain_text.len()];
     let mut key_position = 0_usize;
@@ -48,6 +52,7 @@ pub fn encrypt(plain_text: &[u8], cfg: &Config) -> Vec<u8> {
     cipher_text
 }
 
+/// Function is used for cipher text decryption with the given configuration.
 pub fn decrypt(cipher_text: &[u8], cfg: &Config) -> Vec<u8> {
     let mut plain_text = vec![0_u8; cipher_text.len()];
     let mut key_position = 0_usize;
