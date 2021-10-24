@@ -67,3 +67,38 @@ pub fn decrypt(cipher_text: &[u8], cfg: &Config) -> Vec<u8> {
 
     plain_text
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn table_setup() -> Vec<(&'static str, &'static str)> {
+        vec![("ABCD", "ACED"), ("BBYZ", "BCAZ"), ("AAAYYY", "ABCYZA")]
+    }
+
+    #[test]
+    fn encrypt_default() {
+        let table = table_setup();
+        let config = Config::new();
+
+        for (input, expected) in table {
+            assert_eq!(
+                String::from_utf8_lossy(&encrypt(input.as_bytes(), &config)),
+                expected
+            );
+        }
+    }
+
+    #[test]
+    fn decrypt_default() {
+        let table = table_setup();
+        let config = Config::new();
+
+        for (expected, input) in table {
+            assert_eq!(
+                String::from_utf8_lossy(&decrypt(input.as_bytes(), &config)),
+                expected
+            );
+        }
+    }
+}
